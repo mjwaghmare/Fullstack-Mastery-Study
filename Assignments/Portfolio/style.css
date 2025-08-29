@@ -1,0 +1,108 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #fff;
+  color: #333;
+}
+
+/* Navbar */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 8%;
+  background: #fff;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+}
+.logo span {
+  color: #5a1fd3;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+nav a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #000;
+}
+
+.hire-btn {
+  padding: 6px 20px;
+  border: none;
+  background: #f3e7e9;
+  border-radius: 2px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 8%;
+  min-height: 80vh;
+}
+
+.hero-text h1 {
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.hero-text h1 span {
+  color: #5a1fd3;
+}
+
+.hero-text p {
+  margin: 20px 0;
+  font-size: 16px;
+  color: #555;
+}
+
+.buttons {
+  margin: 20px 0;
+  display: flex;
+  gap: 15px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 2px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.primary {
+  background: linear-gradient(45deg, #7b2ff7, #f107a3);
+  color: #fff;
+}
+
+
+.socials {
+  margin-top: 30px;
+  color: #000;
+  display: flex;
+  align-items: center;
+}
+.socials a {
+  font-size: 30px;
+  margin-right: 15px;
+  color: #000;
+}
+.socials a:hover {
+  color: #5a1fd3;
+}
+
