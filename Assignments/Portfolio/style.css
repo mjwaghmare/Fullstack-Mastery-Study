@@ -2,8 +2,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "Abril","Poppins", sans-serif;
 }
+
+
+.container {
+  max-width: 2800px;
+  margin: 0 auto;
+  padding: 0 8%;
+}
+
 
 body {
   background: #fff;
@@ -23,15 +31,14 @@ header {
   font-size: 24px;
   font-weight: 700;
 }
-.logo span {
-  color: #5a1fd3;
-}
+
 
 nav ul {
   list-style: none;
   display: flex;
   gap: 25px;
 }
+
 nav a {
   text-decoration: none;
   font-weight: 600;
@@ -61,15 +68,12 @@ nav a {
   font-weight: 700;
   line-height: 1.2;
 }
+
 .hero-text h1 span {
   color: #5a1fd3;
 }
 
-.hero-text p {
-  margin: 20px 0;
-  font-size: 16px;
-  color: #555;
-}
+
 
 .buttons {
   margin: 20px 0;
@@ -77,6 +81,7 @@ nav a {
   gap: 15px;
 }
 
+/* Button Style */
 .btn {
   display: inline-block;
   padding: 10px 20px;
@@ -85,24 +90,38 @@ nav a {
   font-weight: 600;
 }
 
-.primary {
+/* Gradient button style */
+.gradient {
   background: linear-gradient(45deg, #7b2ff7, #f107a3);
   color: #fff;
 }
 
-
+/* Social Icons */
 .socials {
-  margin-top: 30px;
+  margin-top: 20px;
   color: #000;
   display: flex;
+  gap: 20px;
   align-items: center;
 }
+
+/* Social Icons  */
 .socials a {
   font-size: 30px;
   margin-right: 15px;
   color: #000;
 }
+
 .socials a:hover {
   color: #5a1fd3;
 }
 
+/* Profile Picture */
+.hero-img img {
+  width: 100%;
+  max-width: 300px;
+  max-height: 400px;
+  height: 30%;
+  border-radius: 6px;
+  padding: 1px;
+}
