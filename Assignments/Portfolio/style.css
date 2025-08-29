@@ -125,3 +125,9 @@ nav a {
   border-radius: 6px;
   padding: 1px;
 }
+
+/* Footer */
+footer {
+  text-align: left;
+  padding: 20px 7%;
+}
