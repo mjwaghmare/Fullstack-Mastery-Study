@@ -1,6 +1,6 @@
 const questions = [
   {
-    question: "What's fullform of HTML?",
+    question: "What's full-form of HTML?",
     options: [
       "High Text Markup Language",
       "High Text Machine Language",
@@ -20,12 +20,12 @@ const questions = [
     correct: 0,
   },
   {
-    question: "What's fullform of JS?",
+    question: "What's full-form of JS?",
     options: ["JavaScript", "Java", "Java Script", "JavaScript"],
     correct: 0,
   },
   {
-    question: "What's fullform of SQL?",
+    question: "What's full-form of SQL?",
     options: [
       "Structured Question Language",
       "Structured Query Language",
