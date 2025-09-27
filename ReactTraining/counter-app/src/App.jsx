@@ -3,7 +3,7 @@ import CustomButton from './components/button'
 import './App.css'
 
 const App = () => {
-  let value = 1;
+
   const [step, setStep] = useState(1)
   const [count, setCount] = useState(0)
 
