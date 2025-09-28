@@ -16,19 +16,16 @@ const TodoItem = ({ todo, handleDelete, handleUpdate }) => {
         {todo.todo}
       </h4>
       <button
-        onClick={() => {
-          console.log("Button clicked for ID:", todo.id);
-
-          return handleUpdate(todo.id);
-        }}
+        onClick={() => handleUpdate(todo.id)}
         style={{
-          background: "blue",
+          background: "#000000",
           marginLeft: "8px",
           color: "#fff",
           border: "none",
           padding: "4px 8px",
           borderRadius: "4px",
           cursor: "pointer",
+          width: "100px",
         }}
       >
         {todo.completed ? "Undo" : "Complete"}

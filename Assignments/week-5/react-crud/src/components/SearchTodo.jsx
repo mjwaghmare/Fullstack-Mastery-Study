@@ -10,10 +10,10 @@ const SearchTodo = ({ handleSearch }) => {
     >
       <input
         type="search"
-        placeholder="Search todo"
+        placeholder="Search a todo"
         onChange={(e) => handleSearch(e.target.value)}
         style={{
-          width: "100%", // Full width
+          width: "100%",
           padding: "8px",
           border: "1px solid #ccc",
           borderRadius: "4px",
