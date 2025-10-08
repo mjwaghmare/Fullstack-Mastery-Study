@@ -70,8 +70,6 @@
   margin-top: auto;
 }
 
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+.read-more:hover {
+  background-color: #333;
 }
