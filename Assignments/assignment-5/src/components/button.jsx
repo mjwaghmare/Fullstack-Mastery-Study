@@ -1,5 +1,3 @@
-import React from "react";
-
 const CustomButton = ({btnName,onClick}) => {
   return (
     <div className="custom-btn">
