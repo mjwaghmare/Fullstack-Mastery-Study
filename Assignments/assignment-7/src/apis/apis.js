@@ -51,7 +51,7 @@ export const sortProductsByPrice = async (sortOption) => {
   console.log(sortOption);
   
   try {
-    const response = await axios.get(`${url}/products?sortBy=price&order=${sortOption}`);
+    const response = await axios.get(`${url}/products?sortBy=price&order=${sortOption}&limit=10`);
     return response.data.products;
   } catch (error) {
     console.error("Error sorting products by price:", error);
