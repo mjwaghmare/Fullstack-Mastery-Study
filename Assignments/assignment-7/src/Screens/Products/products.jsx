@@ -7,7 +7,7 @@ import {
   searchProducts,
   sortProductsByPrice,
 } from "../../apis/apis";
-import { FilterIcon, SortAsc, SortDesc } from "lucide-react";
+import { FilterIcon, Plus, SortAsc, SortDesc } from "lucide-react";
 
 const ProductsScreen = () => {
   const [products, setProducts] = useState([]);
@@ -48,16 +48,16 @@ const ProductsScreen = () => {
     setProducts(filteredProducts);
   };
 
-  const sortWithPrice= async (sortOption) => {
+  const sortWithPrice = async (sortOption) => {
     var sortOptionValue;
-    if(sortOption === true) {
+    if (sortOption === true) {
       sortOptionValue = "asc";
-    }else{
+    } else {
       sortOptionValue = "desc";
     }
-    const sortedWithPrice =  await sortProductsByPrice(sortOptionValue);
+    const sortedWithPrice = await sortProductsByPrice(sortOptionValue);
     setProducts(sortedWithPrice);
-  }
+  };
 
   const handleSort = ({ lowToHigh }) => {
     setLowToHigh(!lowToHigh);
@@ -67,8 +67,28 @@ const ProductsScreen = () => {
 
   return (
     <div className="products-screen">
-      <div className="products-header">
+      <div
+        className="products-header"
+        style={{ display: "flex", justifyContent: "space-between" }}
+      >
         <h1>Products Inventory</h1>
+        <div
+          className="filter-products"
+          style={{
+            height: "40px",
+            display: "flex",
+            alignItems: "center",
+            padding: "1px 8px",
+            background: "#2b82ff",
+            border: "1px solid #e2e8f0",
+            borderRadius: "6px",
+            color: "white",
+            cursor: "pointer",
+          }}
+        >
+          <Plus size={16} />
+          <p style={{ marginLeft: "8px" }}>Add Product</p>
+        </div>
       </div>
 
       <div className="products-filters">
