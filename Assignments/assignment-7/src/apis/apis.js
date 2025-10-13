@@ -2,10 +2,12 @@ import axios from "axios";
 
 const url = "https://dummyjson.com";
 
-/// get all products with limit 10 
+/// get all products with pagination
 export const getProducts = async (page = 1, limit = 10) => {
   try {
-    const response = await axios.get(`${url}/products?limit=${limit}&skip=${(page - 1) * limit}`);
+    const response = await axios.get(
+      `${url}/products?limit=${limit}&skip=${(page - 1) * limit}`
+    );
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -13,11 +15,13 @@ export const getProducts = async (page = 1, limit = 10) => {
   }
 };
 
-/// search products
-export const searchProducts = async (query) => {
+/// search products with pagination
+export const searchProducts = async (query, page = 1, limit = 10) => {
   try {
-    const response = await axios.get(`${url}/products/search?q=${query}&limit=10`);
-    return response.data.products;
+    const response = await axios.get(
+      `${url}/products/search?q=${query}&limit=${limit}&skip=${(page - 1) * limit}`
+    );
+    return response.data;
   } catch (error) {
     console.error("Error searching products:", error);
     throw error;
@@ -35,30 +39,31 @@ export const getProductCategories = async () => {
   }
 };
 
-/// Get products by a category
-export const getProductsByCategory = async (category) => {
+/// Get products by a category with pagination
+export const getProductsByCategory = async (category, page = 1, limit = 10) => {
   try {
-    const response = await axios.get(`${url}/products/category/${category}`);
-    return response.data.products;
+    const response = await axios.get(
+      `${url}/products/category/${category}?limit=${limit}&skip=${(page - 1) * limit}`
+    );
+    return response.data;
   } catch (error) {
     console.error("Error fetching products by category:", error);
     throw error;
   }
 };
 
-/// sort with price
-export const sortProductsByPrice = async (sortOption) => {
-  console.log(sortOption);
-  
+/// sort with price and pagination
+export const sortProductsByPrice = async (sortOption, page = 1, limit = 10) => {
   try {
-    const response = await axios.get(`${url}/products?sortBy=price&order=${sortOption}&limit=10`);
-    return response.data.products;
+    const response = await axios.get(
+      `${url}/products?sortBy=price&order=${sortOption}&limit=${limit}&skip=${(page - 1) * limit}`
+    );
+    return response.data;
   } catch (error) {
     console.error("Error sorting products by price:", error);
     throw error;
   }
 };
-
 
 /// add product
 export const addProduct = async (product) => {
