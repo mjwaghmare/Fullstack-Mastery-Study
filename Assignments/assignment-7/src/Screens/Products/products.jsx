@@ -18,7 +18,7 @@ const ProductsScreen = () => {
   const [lowToHigh, setLowToHigh] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  /// get all products
+  /// get all products and categories
   useEffect(() => {
     fetchProducts();
     getAllCategories();

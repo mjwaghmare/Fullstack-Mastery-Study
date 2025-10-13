@@ -71,3 +71,4 @@ export const addProduct = async (product) => {
   }
 };
 
+//----------------Categories---------------------
