@@ -8,6 +8,7 @@ import {
   sortProductsByPrice,
 } from "../../apis/apis";
 import { FilterIcon, Plus, SortAsc, SortDesc } from "lucide-react";
+import Drawer from "../../components/Drawer/Drawer";
 
 const ProductsScreen = () => {
   const [products, setProducts] = useState([]);
@@ -15,6 +16,7 @@ const ProductsScreen = () => {
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [lowToHigh, setLowToHigh] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   /// get all products
   useEffect(() => {
@@ -85,11 +87,18 @@ const ProductsScreen = () => {
             color: "white",
             cursor: "pointer",
           }}
+          onClick={() => setIsDrawerOpen(true)}
         >
           <Plus size={16} />
-          <p style={{ marginLeft: "8px" }}>Add Product</p>
+          <p style={{ marginLeft: "8px", marginRight: "8px" }}>Add Product</p>
         </div>
       </div>
+      <Drawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        categories={categories}
+        products={products}
+      ></Drawer>
 
       <div className="products-filters">
         <div className="search-box" style={{ flex: 1 }}>
@@ -143,7 +152,7 @@ const ProductsScreen = () => {
             </option>
           ))}
         </select>
-        <div
+        {/* <div
           className="filter-products"
           style={{
             display: "flex",
@@ -156,7 +165,7 @@ const ProductsScreen = () => {
         >
           <FilterIcon size={16} />
           <p style={{ marginLeft: "8px" }}>Filter</p>
-        </div>
+        </div> */}
       </div>
       <div className="products-table">
         <table>

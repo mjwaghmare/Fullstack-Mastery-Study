@@ -59,3 +59,15 @@ export const sortProductsByPrice = async (sortOption) => {
   }
 };
 
+
+/// add product
+export const addProduct = async (product) => {
+  try {
+    const response = await axios.post(`${url}/products/add`, product);
+    return response.data;
+  } catch (error) {
+    console.error("Error adding product:", error);
+    throw error;
+  }
+};
+
