@@ -3,10 +3,10 @@ import axios from "axios";
 const url = "https://dummyjson.com";
 
 /// get all products with limit 10 
-export const getProducts = async () => {
+export const getProducts = async (page = 1, limit = 10) => {
   try {
-    const response = await axios.get(`${url}/products?limit=10`);
-    return response.data.products;
+    const response = await axios.get(`${url}/products?limit=${limit}&skip=${(page - 1) * limit}`);
+    return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
     throw error;
@@ -70,5 +70,3 @@ export const addProduct = async (product) => {
     throw error;
   }
 };
-
-//----------------Categories---------------------

@@ -1,5 +1,5 @@
 import "./products.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   getProductCategories,
   getProducts,
@@ -18,24 +18,29 @@ const ProductsScreen = () => {
   const [lowToHigh, setLowToHigh] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  /// get all products and categories
-  useEffect(() => {
-    fetchProducts();
-    getAllCategories();
-  }, []);
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [limit] = useState(10);
 
   /// get all products
-  const fetchProducts = async () => {
-    const response = await getProducts();
-    setProducts(response);
-  };
+  const fetchProducts = useCallback(
+    async (page = 1) => {
+      const response = await getProducts(page, limit);
+      setProducts(response.products);
+      setTotalProducts(response.total);
+      // setCurrentPage(page);
+    },
+    [limit]
+  );
 
   /// search products
   const searchProductMethod = async (searchQuery) => {
     console.log(searchQuery);
-
     const filteredProducts = await searchProducts(searchQuery);
-    setProducts(filteredProducts);
+    setProducts(filteredProducts.products || filteredProducts);
+    setTotalProducts(filteredProducts.total || filteredProducts.length);
+    setCurrentPage(1);
   };
 
   /// get all categories
@@ -45,10 +50,18 @@ const ProductsScreen = () => {
   };
 
   // get products by category
-  const getProductsByOneCategory = async (category) => {
-    const filteredProducts = await getProductsByCategory(category);
-    setProducts(filteredProducts);
-  };
+  const getProductsByOneCategory = useCallback(
+    async (category, page = 1) => {
+      const filteredProducts = await getProductsByCategory(
+        category,
+        page,
+        limit
+      );
+      setProducts(filteredProducts.products || filteredProducts);
+      setTotalProducts(filteredProducts.total || filteredProducts.length);
+    },
+    [limit]
+  );
 
   const sortWithPrice = async (sortOption) => {
     var sortOptionValue;
@@ -58,7 +71,9 @@ const ProductsScreen = () => {
       sortOptionValue = "desc";
     }
     const sortedWithPrice = await sortProductsByPrice(sortOptionValue);
-    setProducts(sortedWithPrice);
+    setProducts(sortedWithPrice.products || sortedWithPrice);
+    setTotalProducts(sortedWithPrice.total || sortedWithPrice.length);
+    setCurrentPage(1);
   };
 
   const handleSort = ({ lowToHigh }) => {
@@ -66,6 +81,17 @@ const ProductsScreen = () => {
     console.log(lowToHigh);
     sortWithPrice(lowToHigh);
   };
+
+  useEffect(() => {
+  if (category && category !== "All Categories") {
+    getProductsByOneCategory(category, currentPage);
+  } else {
+    fetchProducts(currentPage);
+  }
+  if (categories.length === 0) {
+    getAllCategories();
+  }
+}, [currentPage, category, fetchProducts, getProductsByOneCategory, categories.length]);
 
   return (
     <div className="products-screen">
@@ -132,13 +158,15 @@ const ProductsScreen = () => {
           onChange={(e) => {
             /// set the category
             setCategory(e.target.value);
+            /// reset to page 1
+            setCurrentPage(1);
             /// if category is All Categories then fetch all products
             if (e.target.value === "All Categories") {
-              fetchProducts();
+              fetchProducts(1);
             }
             /// else fetch products by category
             else {
-              getProductsByOneCategory(e.target.value);
+              getProductsByOneCategory(e.target.value, 1);
             }
           }}
           className="category-filter"
@@ -152,20 +180,6 @@ const ProductsScreen = () => {
             </option>
           ))}
         </select>
-        {/* <div
-          className="filter-products"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            padding: "1px 8px",
-            background: "transparent",
-            border: "1px solid #e2e8f0",
-            borderRadius: "6px",
-          }}
-        >
-          <FilterIcon size={16} />
-          <p style={{ marginLeft: "8px" }}>Filter</p>
-        </div> */}
       </div>
       <div className="products-table">
         <table>
@@ -210,8 +224,8 @@ const ProductsScreen = () => {
                         alt={product.title}
                         className="product-image"
                         style={{
-                          width: "55px",
-                          height: "50px",
+                          width: "45px",
+                          height: "40px",
                           objectFit: "contain",
                         }}
                       />
@@ -229,20 +243,78 @@ const ProductsScreen = () => {
             ))}
           </tbody>
         </table>
-        {/* <div className="pagination">
+        <div className="pagination">
           <div className="pagination-info">
-            Showing 1 to 10 of {products.length} results
+            Showing {(currentPage - 1) * limit + 1} to{" "}
+            {Math.min(currentPage * limit, totalProducts)} of {totalProducts}{" "}
+            results
           </div>
           <div className="pagination-controls">
-            <button className="page-btn" disabled>&lt;</button>
-            <button className="page-btn active">1</button>
-            <button className="page-btn">2</button>
-            <button className="page-btn">3</button>
-            <span className="page-ellipsis">...</span>
-            <button className="page-btn">10</button>
-            <button className="page-btn">&gt;</button>
+            <button
+              className="page-btn"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(currentPage - 1)}
+            >
+              &lt;
+            </button>
+
+            {/* First page */}
+            {currentPage > 2 && (
+              <button className="page-btn" onClick={() => setCurrentPage(1)}>
+                1
+              </button>
+            )}
+
+            {/* Ellipsis before current page */}
+            {currentPage > 3 && <span className="page-ellipsis">...</span>}
+
+            {/* Previous page */}
+            {currentPage > 1 && (
+              <button
+                className="page-btn"
+                onClick={() => setCurrentPage(currentPage - 1)}
+              >
+                {currentPage - 1}
+              </button>
+            )}
+
+            {/* Current page */}
+            <button className="page-btn active">{currentPage}</button>
+
+            {/* Next page */}
+            {currentPage < Math.ceil(totalProducts / limit) && (
+              <button
+                className="page-btn"
+                onClick={() => setCurrentPage(currentPage + 1)}
+              >
+                {currentPage + 1}
+              </button>
+            )}
+
+            {/* Ellipsis after current page */}
+            {currentPage < Math.ceil(totalProducts / limit) - 2 && (
+              <span className="page-ellipsis">...</span>
+            )}
+
+            {/* Last page */}
+            {currentPage < Math.ceil(totalProducts / limit) - 1 && (
+              <button
+                className="page-btn"
+                onClick={() => setCurrentPage(Math.ceil(totalProducts / limit))}
+              >
+                {Math.ceil(totalProducts / limit)}
+              </button>
+            )}
+
+            <button
+              className="page-btn"
+              disabled={currentPage === Math.ceil(totalProducts / limit)}
+              onClick={() => setCurrentPage(currentPage + 1)}
+            >
+              &gt;
+            </button>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );
